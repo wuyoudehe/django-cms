@@ -16,13 +16,15 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from man_log import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/', include('man_log.urls')),
     url(r'^users/', include('django.contrib.auth.urls')),
+    url(r'^message/', include('message_man.urls')),
+    url(r'^content/', views.content,name='index'),
+    url(r'^$', views.index),
 
-    url(r'^', views.index, name='index'),
-
-]
+] + static(settings.STATIC_URL,document_root=settings.STATIC_URL)

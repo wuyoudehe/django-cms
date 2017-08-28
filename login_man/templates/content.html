@@ -1,0 +1,78 @@
+{% extends 'registration/base.html' %}
+{% block title %}
+    <title>首页</title>
+<link rel="stylesheet" href="https://cdn.staticfile.org/mobi.css/2.0.0-beta.1/mobi.min.css">
+
+{% endblock %}
+{% block content %}
+    <div>
+        <h1 class="logo"><a href="#">用户内容管理系统</a></h1>
+        {% if user.is_authenticated %}
+            {% csrf_token %}
+            <p>你已登录，欢迎你：<a href="/admin/" id="usernames">{{ user.username }}</a></p>
+            <button class="btn btn-default"><a href="{% url 'logout' %}?next={{ request.path }}">注销登录</a></button>
+            <button class="btn btn-default"><a href="{% url 'password_change' %}?next={{ request.path }}">修改密码</a>
+            </button>
+            <button class="btn btn-default" id="m"><a>发送站内信</a></button>
+            <button class="btn btn-default" id="message"><a id="message——nums" href="/message/weidu/" methods="GET">信箱</a></button>
+            <div id="p" hidden="hidden">
+                <label>站内信息发送人选择</label>
+                <select name="" id="name_list">
+                </select>
+                <form action="/add/" method="POST">
+                    {% csrf_token %}
+                    <input rows="3" cols="50" id="b">
+                    <textarea rows="3" cols="80" id="a"></textarea>
+                    <p>发送成功: <span id='result'></span></p>
+                    <p>js: <span id='jstest'></span></p>
+                    <button class="btn btn-default" type="button" id='sum' value="">提交</button>
+                </form>
+            </div>
+            <script>
+                var name_list = JSON.parse('{{ mannames|safe }}');
+                var arr = name_list.username
+                $.each(arr, function () {
+                    var usernames=$('#usernames').val()
+                    console.log(this);
+                    if (this==usernames)
+                    {
+                        return true
+                        }
+                    else{
+                        $("#name_list").append("<option value='"+this+"'>" + this + "</option>");
+                    }
+                    }
+                );
+                $(document).ready(function () {
+
+                    $("#m").click(function () {
+                        $("#p").show();
+                    });
+                    $("#sum").click(function () {
+                        var a = $('#a').val();
+                        var b = $('#b').val();
+                        var receivename=$('#name_list').val()
+                        $.ajax({
+                            method: "POST",
+                            url: '/message/add/',
+                            data: {'a': a, 'b': b,'receivename':receivename, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                            datatype: "json",
+                            success: function (msg) {
+                                console.log(msg)
+                                $("#result").html(msg.name);
+                                $("#jstest").html(msg.year);
+                            }
+                        })
+                    });
+                });
+            </script>
+        {% else %}
+            <p>你还没有登录，请
+                <button class="btn btn-default"><a href="{% url 'login' %}?next={{ request.path }}">登录</a></button>
+                或者
+                <button class="btn btn-default"><a href="{% url 'man_log:register' %}">注册</a></button>
+            </p>
+        {% endif %}
+    </div>
+{% endblock %}
+

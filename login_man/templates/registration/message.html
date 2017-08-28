@@ -1,0 +1,40 @@
+{% extends 'registration/base.html' %}
+{% block title %}
+<h1 class="text-info">站内未读信息箱</h1>
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+    {% csrf_token %}
+    <table class = "table table-striped" >
+    <thead  style="width: 100%;margin: auto;">
+         <tr>
+            <th style="float: left;width: 33%; text-align: center"><h3>发送人</h3></th>
+            <th style="float: left;width: 33%; text-align: center"><h3>标题</h3></th>
+            <th style="float: left;width: 33%; text-align: center"><h3>发送时间</h3><th>
+        </tr>
+    </thead>
+    <tbody>
+    <div  style="width: 100%;margin: auto;">
+        <div>
+        <tr class="list-group" style="float: left;width: 33%; text-align: center">
+            {% for A in msg_sendname %}
+                <td class="list-group-item">{{ A }}</td>
+            {% endfor %}
+        </tr>
+    </div><div>
+        <tr class="list-group" style="float:left ;width: 33%; text-align: center">
+            {% for A in msg_title %}
+                <td class="list-group-item"><a id="checkweidu" href="">{{ A }}</a></td>
+            {% endfor %}
+        </tr></div>
+    <div>
+        <tr class="list-group" style="float: left;width: 33%; text-align: center">
+            {% for A in msg_time %}
+                <td class="list-group-item">{{ A }}</td>
+            {% endfor %}
+        </tr></div>
+    </div>
+    </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

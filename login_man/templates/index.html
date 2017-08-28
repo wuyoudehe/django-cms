@@ -1,30 +1,128 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+{% extends 'registration/base.html' %}
+{% block title %}
     <title>首页</title>
-    <link rel="stylesheet" href="https://unpkg.com/mobi.css/dist/mobi.min.css">
-</head>
-<body>
-<div class="flex-center">
-    <div class="container">
-        <div>
-            <h1 class="logo"><a href="{% url 'index' %}">Django Auth Example</a></h1>
-            {% if user.is_authenticated %}
-                <p>你已登录，欢迎你：<a href="#">{{ user.username }}</a></p>
-                <button class="btn btn-default"> <a href="{% url 'logout' %}?next={{ request.path }}">注销登录</a></button>
-                <button class="btn btn-default"><a href="{% url 'password_change' %}?next={{ request.path }}">修改密码</a></button>
-            {% else %}
-                <p>你还没有登录，请
-                    <button class="btn btn-default"><a href="{% url 'login' %}?next={{ request.path }}">登录</a></button>
-                    或者
-                    <button class="btn btn-default"><a href="{% url 'man_log:register' %}">注册</a></button>
-                </p>
-            {% endif %}
-        </div>
-    </div>
+{% endblock %}
+{% block content %}
+    {% load static %}
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Brand</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="dropdown">
+							 <a href="#">Link</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#">Link</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">最新信息<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									 <a href="#">产品信息</a>
+								</li>
+								<li>
+									 <a href="#">公司信息</a>
+								</li>
+								<li>
+									 <a href="#">业内信息</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control"  placeholder="请输入需要查找的内容">
+						</div> <button type="submit" class="btn btn-default">Submit</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							 <a href="#">Link</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">请登录或者注册<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									 <a href="{% url 'login' %}?next={{ request.path }}">登录</a>
+								</li>
+								<li>
+									 <a href="{% url 'man_log:register' %}">注册</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+
+			</nav>
+			<div class="jumbotron">
+				<h1>
+					Hello, world!
+				</h1>
+				<p>
+					hello world two!
+				</p>
+				<p>
+					 <a class="btn btn-primary btn-large" href="#">Learn more</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-4 column">
+			<h2>
+				最新信息
+			</h2>
+			<table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <td>Tanmay</td>
+                        <td>Bangalore</td>
+                        <td>560001</td>
+                        <td>2017.8.27</td>
+                    </tr>
+                <tr>
+                     <td>Sachin</td>
+                     <td>Mumbai</td>
+                     <td>400003</td>
+                    <td>2017.8.27</td>
+                </tr>
+                <tr>
+                    <td>Uma</td>
+                    <td>Pune</td>
+                    <td>411027</td>
+                    <td>2017.8.27</td>
+                </tr>
+                </tbody>
+            </table>
+			<p>
+				 <a class="btn" href="#">查看更多»</a>
+			</p>
+		</div>
+		<div class="col-md-4 column " style="height: 250px">
+			<h2>
+				Heading
+			</h2>
+			<img src="{% static "/jpg/products.jpg" %} " alt="Cinque Terre" width="304px" height="200px">
+			<p>
+				 <a class="btn" href="#">View details »</a>
+			</p>
+		</div>
+		<div class="col-md-4 column">
+			<h2>
+				Heading
+			</h2>
+			<p>
+				Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+			</p>
+			<p>
+				 <a class="btn" href="#">View details »</a>
+			</p>
+		</div>
+	</div>
 </div>
-</body>
-</html>
+{% endblock %}

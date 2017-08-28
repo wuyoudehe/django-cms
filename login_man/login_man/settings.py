@@ -25,7 +25,7 @@ SECRET_KEY = '&w@qj+%a&+9v9tnx$c72$dor1pm0ita-j*an=eiw5vbc$-o&qt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'man_log',
+    'message_man',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +51,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'localhost:11211',
+        'TIMEOUT': 500,
+    }
+}
 ROOT_URLCONF = 'login_man.urls'
 
 TEMPLATES = [
@@ -84,6 +92,7 @@ DATABASES = {
                 'HOST': '127.0.0.1',
                 'PORT': '3306',
     }
+
 }
 
 
@@ -125,10 +134,22 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# 邮件系统
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'a1021982193@163.com'
+EMAIL_HOST_PASSWORD = '**************'
+DEFAULT_FROM_EMAIL = 'a1021982193@163.com'
+
+# 重定向设置
 LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/content/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
-STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR,'templates'),)
+STATIC_URL = '/templates/'
+STATIC_ROOT = '/home/website/login_man/templates/'
